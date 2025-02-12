@@ -1,0 +1,8 @@
+﻿1-Large-Outdoor-Enclosure-3-T/3Lm/8Mm
+2-Medium-Outdoor-Enclosure-2-T/2Lm/6Mm
+3-Medium-Indoor-Cage-2-A/6Amarmoset
+4-Small-Outdoor-Cage-1-A/2Amonkey/20Arabbit
+5-Very Large-Outdoor-Cage-2-A/3Acrocodile
+6-Medium-Indoor-Cage-3-A/2Lsnake/4SMsnake/2Mlizard
+7-Small-Indoor-Cage-2-A/2Ssnake/4Llizard
+8-Large-Indoor-Aviary-1-T/8Ab

@@ -1,0 +1,8 @@
+﻿Marmoset - Zebra
+Rabbit - Guinea pig
+Guinea pig - Rabbit
+Horse - Donkey
+Donkey - Horse
+Zebra - Marmoset
+Bearded Dragon - Lizard
+Lizard - Bearded Dragon

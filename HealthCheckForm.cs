@@ -1,0 +1,49 @@
+﻿using Clyde_Conservatory;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace College_Admissions
+{
+    public partial class HealthCheckForm : Form
+    {
+        private Animal animal;
+        public HealthCheckForm(ref Animal a)
+        {
+            InitializeComponent();
+            animal = a;
+        }
+        private void btnConfirm_Click(object sender, EventArgs e)
+        {
+            foreach (Control control in this.Controls)
+            {
+                if ((control is TextBox txt && (txt.Text == "" || txt.Text.All(c => c == ' '))) ||
+                    (control is GroupBox groupBox && !groupBox.Controls.OfType<RadioButton>().Any(rdb => rdb.Checked)))
+                {
+                    MessageBox.Show("Please fill in all fields");
+                    return;
+                }
+            }
+
+            // Generate the health check record
+            string vetName = txtVetName.Text.Trim();
+            string status = rdbHealthy.Checked ? "Healthy" : "Sick";
+            string healthCheckRecord = $"{DateTime.Now}: Health check made by Vet {vetName} - Status: {status}\n";
+            animal.Records += healthCheckRecord;
+            this.Close();
+            
+        }
+
+        private void HealthCheckForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            AnimalEditingForm animalEditingForm = new(ref animal);
+            animalEditingForm.Show();
+        }
+    }
+}

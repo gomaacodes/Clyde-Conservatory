@@ -1,0 +1,11 @@
+M-1-Simba-Lion-01/01/2018-M-O-01/01/2018-5-L-10000-11-false
+M-2-ShereKhan-Tiger-15/03/2017-F-L-15/03/2017-4-L-12000-21-false
+M-3-Dumbo-Elephant-22/07/2019-M-B-22/07/2019-3-L-15000-21-false
+M-4-Melman-Giraffe-30/09/2020-F-B-30/09/2020-2-L-8000-21-false
+M-5-Marty-Zebra-05/11/2021-M-O-05/11/2021-1-M-5000-22-false
+R-6-Kaa-Snake-12/06/2018-M-O-12/06/2018-3-S-2000-Forest-25-32-true
+R-7-Croc-Crocodile-25/12/2016-F-L-25/12/2016-5-L-3000-Swamp-30-41-false
+F-8-Tweety-Canary-10/04/2020-F-B-10/04/2020-2-S-1000-Seeds-Tree-20-15-42-false
+F-9-Eagle-Eagle-18/08/2017-M-O-18/08/2017-4-M-5000-Fish-Cliff-200-50-51-false
+N-10-Pingu-Penguin-02/02/2019-M-B-02/02/2019-3-M-2500-Fish-Iceberg-Coast-10-51-false
+N-11-Dodo-Dodo-14/05/2021-F-L-14/05/2021-1-S-1500-Fruits-Ground-Forest-5-63-false
