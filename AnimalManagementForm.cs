@@ -1,4 +1,5 @@
-﻿using Org.BouncyCastle.Utilities.IO.Pem;
+﻿using College_Admissions;
+using Org.BouncyCastle.Utilities.IO.Pem;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,14 +28,12 @@ namespace Clyde_Conservatory
         private void AnimalForm_Load(object sender, EventArgs e)
         {
             LoadListView();                                         //Add Columns to listview
-            LoadData(Program.Animals);                                  //Load fetched records into listView
+            LoadData();                                  //Load fetched records into listView
             AutoFitColumns();                                       //Adjust columns' width to autofit
         }
 
         private void lvRecords_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)     //When the highlighted row is changed
         {
-            this.Width = 987;                                       //Expand the window size
-
             if (lvRecords.SelectedItems.Count != 1)             //Check if user is attempting to click away from a record or multi select records
             {
                 lvRecords.SelectedItems.Clear();                //Unselect the highlighted rows
@@ -47,56 +46,18 @@ namespace Clyde_Conservatory
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            AnimalEditingForm animalEditingForm = new(ref animal);
+            AnimalEditingForm animalEditingForm = new(animal);
             animalEditingForm.Show();
             this.Hide();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-
-            //    department = new Department();                                                                      //Initialise a new record
-            //    department.DepartmentID = departments.Count == 0 ? 10000 : departments[departments.Count - 1].DepartmentID + 10000;                  //Set Record's ID, Will vary from one form to the other
-
-            //    AddAnimalForm departmentCU = new(departments, department);                                       //Initialise a Create/Update Form
-            //    departmentCU.Show();                                                                                //Show New form
-            //    this.Hide();                                                                                        //Hide Current Form
-        }
-
-        private void btnExport_Click(object sender, EventArgs e)
-        {
-            //    using (SaveFileDialog saveFileDialog = new SaveFileDialog())
-            //    {
-            //        saveFileDialog.Filter = "CSV Files (*.csv)|*.csv";
-            //        if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            //        {
-            //            // Call the static method from Program.cs to export ListView to CSV
-            //            Program.ExportListViewToCsv(lvRecords, saveFileDialog.FileName);
-            //            MessageBox.Show("Export Successful!");
-            //        }
-            //    }
-        }
-
-        private void txtSearch_TextChanged(object sender, EventArgs e)
-        {
-            //    LoadData(SearchResults());                                                                          //Search for Text in search bar
-        }
-
-        private void rdo_CheckedChanged(object sender, EventArgs e)
-        {
-            //    LoadData(SearchResults());
-        }
-
-
         private void AnimalForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            // Update animals txt
+            FileManager.SaveAnimals([@"..\..\..\Animals.txt", @"..\..\..\Mammals-G.txt", @"..\..\..\Mammals-M.txt", @"..\..\..\A-Records.txt"], Program.Animals);
+
             Form1 form = new();
             form.Show();                                                                                        //Go back to previous form
         }
@@ -119,11 +80,11 @@ namespace Clyde_Conservatory
             lvRecords.Columns.Add("Ins. Value");
         }
 
-        public void LoadData(List<Animal> animals)
+        public void LoadData()
         {
             lvRecords.Items.Clear();
 
-            foreach (var animal in Program.Animals)
+            foreach (var animal in Program.Animals.Where(a => a.AcquisitionType != 'N'))
             {
                 ListViewItem listitem = new ListViewItem(animal.AnimalId.ToString());     //Initialise an Item with first column value
 
@@ -165,10 +126,14 @@ namespace Clyde_Conservatory
             {
                 placeholder += "Currently Loaned Out\n\n";
             }
+            else if (animal.AcquisitionType == 'B' && animal.UnitAllocation == null)
+            {
+                placeholder += "Animal is no longer borrowed\n\n";
+            }
             else
             {
                 placeholder += $"Unit ID: {animal.UnitAllocation.UnitId}";
-                placeholder += animal.EmergencyShare ? " - Under Emergency Share\n" : "\n"; 
+                placeholder += animal.EmergencyShare ? " - Under Emergency Share\n" : "\n";
                 placeholder += $"{animal.UnitAllocation.Cage.Size} {animal.UnitAllocation.Cage.Location} {animal.UnitAllocation.Cage.Type}\n\n";
             }
 
@@ -179,41 +144,11 @@ namespace Clyde_Conservatory
             btnEdit.Enabled = true;                                                                             // Enable the edit button
         }
 
-
-        private List<Animal> SearchResults()
+        private void btnEmergencyCheck_Click(object sender, EventArgs e)
         {
-            //    //string departmentToSearch = txtSearch.Text.ToLower();                                               // Convert search text to lowercase
-            //    //List<Department> departmentsFound = new List<Department>();                                         // Initialize list to store found records
-
-            //    //foreach (Department department in departments)
-            //    //{
-            //    //    if (departmentToSearch == "" || departmentToSearch.All(c => c == ' '))
-            //    //    {
-            //    //        departmentsFound = departments; // Add all records
-            //    //    }
-            //    //    else if (rdoTitle.Checked)
-            //    //    {
-            //    //        if (department.Title.ToLower().StartsWith(departmentToSearch))
-            //    //        {
-            //    //            departmentsFound.Add(department); // Add matching record by title
-            //    //        }
-            //    //    }
-            //    //    else if (rdoCode.Checked)
-            //    //    {
-            //    //        if (department.DepartmentID.ToString().StartsWith(departmentToSearch))
-            //    //        {
-            //    //            departmentsFound.Add(department); // Add matching record by author
-            //    //        }
-            //    //    }
-            //    //}
-
-            //    //return departmentsFound; // Return list of found records
-            return null;
-        }
-
-        private void rtbRecord_TextChanged(object sender, EventArgs e)
-        {
-
+            HealthCheckForm healthCheckForm = new(ref animal, this);
+            healthCheckForm.Show();
+            this.Hide();
         }
     }
 }

@@ -28,21 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            btnEdit = new Button();
             lvRecords = new ListView();
             rtbRecord = new RichTextBox();
             SuspendLayout();
-            // 
-            // btnEdit
-            // 
-            btnEdit.Font = new Font("Segoe UI", 12F);
-            btnEdit.Location = new Point(852, 400);
-            btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(107, 33);
-            btnEdit.TabIndex = 4;
-            btnEdit.Text = "Edit";
-            btnEdit.UseVisualStyleBackColor = true;
-            btnEdit.Click += btnEdit_Click;
             // 
             // lvRecords
             // 
@@ -66,10 +54,9 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(971, 466);
+            ClientSize = new Size(971, 365);
             Controls.Add(rtbRecord);
             Controls.Add(lvRecords);
-            Controls.Add(btnEdit);
             Name = "CageForm";
             Text = "Unit Management";
             FormClosed += CageForm_FormClosed;

@@ -7,8 +7,14 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Clyde_Conservatory
 {
+    /// <summary>
+    /// Abstract base class representing an animal in the conservatory.
+    /// </summary>
     public abstract class Animal
     {
+        /// <summary>
+        /// Initializes a new instance of the animal class.
+        /// </summary>
         protected Animal(int animalId, string name, string type, DateTime birthDate, char sex, char acquisitionType, DateTime acquisitionDate, int dangerRating, char size, double insuranceValue)
         {
             AnimalId = animalId;
@@ -37,21 +43,21 @@ namespace Clyde_Conservatory
         public Unit UnitAllocation { get; set; }
         public bool EmergencyShare { get; set; }
 
-        public void PerformHealthCheck(int animalId)
-        {
-            // Implementation to perform health check
-        }
-
-        public void UpdateCageAllocation(int unitId)
-        {
-            // Implementation to update cage allocation
-        }
-
+        /// <summary>
+        /// Displays unique attributes specific to the animal type.
+        /// </summary>
+        /// <returns>A string describing the unique attributes.</returns>
         public abstract string DisplayUniqueAttributes();
     }
 
+    /// <summary>
+    /// Represents a mammal in the conservatory.
+    /// </summary>
     public class Mammal : Animal
     {
+        /// <summary>
+        /// Initializes a new instance of the mammal class.
+        /// </summary>
         public Mammal(int animalId, string name, string type, DateTime birthDate, char sex, char acquisitionType, DateTime acquisitionDate, int dangerRating, char size, double insuranceValue)
             : base(animalId, name, type, birthDate, sex, acquisitionType, acquisitionDate, dangerRating, size, insuranceValue)
         {
@@ -62,32 +68,53 @@ namespace Clyde_Conservatory
 
         public override string DisplayUniqueAttributes()
         {
-            var matedWithDetails = "Mated With:\n";
+            var matedWithDetails = "";
+            var dates = "";
 
-            foreach (Animal a in MatedWith)
+            if (MatedWith.Count > 0)
             {
-                matedWithDetails += $"{a.AnimalId} - {a.Name} - {a.Type}\n";
+                matedWithDetails = "Mated With:\n";
+
+                foreach (Animal a in MatedWith)
+                {
+                    matedWithDetails += $"{a.AnimalId} - {a.Name} - {a.Type}\n";
+                }
             }
 
-            var dates = "\nGave birth on: \n";
-
-            foreach (DateTime date in GaveBirthOn)
+            if (GaveBirthOn.Count > 0)
             {
-                dates += $"{date.ToShortDateString()}\n";
+                dates = "\nGave birth on: \n";
+
+                foreach (DateTime date in GaveBirthOn)
+                {
+                    dates += $"{date.ToShortDateString()}\n";
+                }
             }
             return matedWithDetails + dates + $"\n{Records}";
-
-
         }
 
-        public void UpdateMatingRecords(int animalId)
+        /// <summary>
+        /// Updates mating records for the mammal.
+        /// </summary>
+        /// <param name="mammal">The mammal this mammal mated with.</param>
+        public void UpdateMatingRecords(Mammal mammal)
         {
-            // Implementation to update mating records
+            // Ensure both mammals are updated
+            MatedWith.Add(mammal);
+            mammal.MatedWith.Add(this);
+
+            mammal.Records += $"{DateTime.Now.ToShortDateString()}: Mated with {this.Name}\n";
         }
     }
 
+    /// <summary>
+    /// Represents a reptile in the conservatory.
+    /// </summary>
     public class Reptile : Animal
     {
+        /// <summary>
+        /// Initializes a new instance of the reptile class.
+        /// </summary>
         public Reptile(int animalId, string name, string type, DateTime birthDate, char sex, char acquisitionType, DateTime acquisitionDate, int dangerRating, char size, double insuranceValue, string environment, double habitatTemperature)
             : base(animalId, name, type, birthDate, sex, acquisitionType, acquisitionDate, dangerRating, size, insuranceValue)
         {
@@ -101,12 +128,18 @@ namespace Clyde_Conservatory
 
         public override string DisplayUniqueAttributes()
         {
-            return $"Environment: {Environment}\nHabitat Temperature: {HabitatTemperature} Celcius Degress";
+            return $"Environment: {Environment}\nHabitat Temperature: {HabitatTemperature} Celcius Degress" + $"\n\n{Records}";
         }
     }
 
+    /// <summary>
+    /// Represents a bird in the conservatory.
+    /// </summary>
     public class Bird : Animal
     {
+        /// <summary>
+        /// Initializes a Bird class with flight properties.
+        /// </summary>
         public Bird(int animalId, string name, string type, DateTime birthDate, char sex, char acquisitionType, DateTime acquisitionDate, int dangerRating, char size, double insuranceValue, string feedingRequirement, string nestEnvironment, double wingspan, double optimumFlightSpeed)
             : base(animalId, name, type, birthDate, sex, acquisitionType, acquisitionDate, dangerRating, size, insuranceValue)
         {
@@ -115,7 +148,11 @@ namespace Clyde_Conservatory
             NestEnvironment = nestEnvironment;
             Wingspan = wingspan;
             OptimumFlightSpeed = optimumFlightSpeed;
-        }   
+        }
+
+        /// <summary>
+        /// Initializes a Bird class with land properties.
+        /// </summary>
         public Bird(int animalId, string name, string type, DateTime birthDate, char sex, char acquisitionType, DateTime acquisitionDate, int dangerRating, char size, double insuranceValue, string feedingRequirement, string nestEnvironment, string preferredHabitat, double optimumLandSpeed)
             : base(animalId, name, type, birthDate, sex, acquisitionType, acquisitionDate, dangerRating, size, insuranceValue)
         {
@@ -137,18 +174,21 @@ namespace Clyde_Conservatory
         {
             if (Wingspan.HasValue && OptimumFlightSpeed.HasValue)
             {
-                return $"Feeding Requirement: {FeedingRequirement} \nNest Environment: {NestEnvironment} \nWingspan: {Wingspan} CM \nOptimum Flight Speed: {OptimumFlightSpeed} km/h";
+                return $"Feeding Requirement: {FeedingRequirement} \nNest Environment: {NestEnvironment} \nWingspan: {Wingspan} CM \nOptimum Flight Speed: {OptimumFlightSpeed} km/h" + $"\n\n{Records}";
             }
             else
             {
-                return $"Feeding Requirement: {FeedingRequirement} \nNest Environment: {NestEnvironment} \nPreferred Habitat: {PreferredHabitat} \nOptimum Land Speed: {OptimumLandSpeed} km/h";
+                return $"Feeding Requirement: {FeedingRequirement} \nNest Environment: {NestEnvironment} \nPreferred Habitat: {PreferredHabitat} \nOptimum Land Speed: {OptimumLandSpeed} km/h" + $"\n\n{Records}";
             }
         }
     }
 
     public class Keeper
     {
-        public Keeper(int keeperId, string forename, string surname, string address, string phoneNum, string position, bool availability, int maxNumOfCages)
+        /// <summary>
+        /// Initializes a new instance of the keeper class.
+        /// </summary>
+        public Keeper(int keeperId, string forename, string surname, string address, string phoneNum, string position, int maxNumOfCages)
         {
             KeeperId = keeperId;
             Forename = forename;
@@ -157,7 +197,6 @@ namespace Clyde_Conservatory
             PhoneNum = phoneNum;
             Position = position;
             MaxNumOfCages = maxNumOfCages;
-            Availability = availability;
         }
 
         public int KeeperId { get; set; }
@@ -166,15 +205,22 @@ namespace Clyde_Conservatory
         public string Address { get; set; }
         public string PhoneNum { get; set; }
         public string Position { get; set; }
-        public bool Availability { get; set; }
         public int MaxNumOfCages { get; set; }
         public List<Unit> Units { get; set; } = new List<Unit>();
 
+        /// <summary>
+        /// Returns the number of cages the keeper can be assigned to.
+        /// </summary>
+        /// <returns>Number of cages left</returns>
         public string unitsLeft()
         {
             return $"{MaxNumOfCages - Units.Count}";
         }
 
+        /// <summary>
+        /// Displays the details of the keeper.
+        /// </summary>
+        /// <returns>String containing the units the keeper is assigned to</returns>
         public string DisplayKeeperDetails()
         {
             var unitsList = "Assigned to \n";
@@ -185,13 +231,11 @@ namespace Clyde_Conservatory
             }
             return unitsList;
         }
-
-        public void UpdateCageAllocation(int cageId)
-        {
-            // Implementation to update cage allocation
-        }
     }
 
+    /// <summary>
+    /// Represents a cage in the conservatory.
+    /// </summary>
     public class Cage
     {
         public Cage(int cageNumber, string size, string location, string type, int maxNumOfKeepers, string suitability)
@@ -200,32 +244,27 @@ namespace Clyde_Conservatory
             Size = size;
             Location = location;
             Type = type;
-            MaxNumOfKeepers = maxNumOfKeepers;
             Suitability = suitability;
+            Keepers = new Keeper[maxNumOfKeepers];
         }
 
         public int CageNumber { get; set; }
         public string Size { get; set; }
         public string Location { get; set; }
         public string Type { get; set; }
-        public int MaxNumOfKeepers { get; set; }
         public string Suitability { get; set; }
+        public Keeper[] Keepers { get; set; }
         public List<Unit> Units { get; set; } = new List<Unit>();
-
-
-        public void UpdateCageAnimals(int animalId)
-        {
-            // Implementation to update cage animals
-        }
-
-        public void UpdateCageKeepers(int keeperId)
-        {
-            // Implementation to update cage keepers
-        }
     }
 
+    /// <summary>
+    /// Represents a unit in the conservatory.
+    /// </summary>
     public class Unit
     {
+        /// <summary>
+        /// Initializes a new instance of the unit class.
+        /// </summary>
         public Unit(int unitId)
         {
             UnitId = unitId;
@@ -238,10 +277,12 @@ namespace Clyde_Conservatory
         public string AnimalSize { get; set; }
         public char Group { get; set; }
         public List<string> SuitableAnimals { get; set; } = new List<string>();
-
-
         public Cage Cage { get; set; }
 
+        /// <summary>
+        /// Displays the details of the unit.
+        /// </summary>
+        /// <returns>String containing unit's animals and keepers</returns>
         public string DisplayUnitDetails()
         {
             var animalsList = "Animals\n";
@@ -261,74 +302,59 @@ namespace Clyde_Conservatory
             return animalsList + keepersList;
         }
 
+        /// <summary>
+        /// Checks if an animal is suitable for the unit.
+        /// </summary>
+        /// <returns>True if the animal is suitable, false otherwise</returns>
         public bool CheckAnimalSuitability(Animal a)
         {
-
+            // If the unit is empty
             if (Animals.Count == 0)
             {
-                // Check the cage suitability string
+                // Check the cage suitability group string
                 string[] suitabilityParts = Cage.Suitability.Split('/');
-
                 char suitabilityType = suitabilityParts[0][0];
 
-                for(int i = 1; i < suitabilityParts.Length; i++)
+                // Decode the suitability string
+                foreach (string details in suitabilityParts.Skip(1))
                 {
-                    AnimalSize = "";
+                    int capacity = 0;
+                    string animalSize = "";
+                    string groupOrType = "";
 
+                    // Parse the details
+                    foreach (char d in details)
+                    {
+                        if (int.TryParse(d.ToString(), out int result))
+                        {
+                            capacity = result; // Capacity of the unit
+                        }
+                        else if (char.IsUpper(d))
+                        {
+                            animalSize += d; // Size(s) of the animal
+                        }
+                        else if (char.IsLower(d))
+                        {
+                            groupOrType += d; // Group or type of the animal
+                        }
+                    }
+
+                    // Check suitability based on the type
                     if (suitabilityType == 'T')
                     {
-                        string details = suitabilityParts[i];
-
-                        // Group suitability
-                        foreach (char d in details)
+                        // Check if the animal is suitable for the unit based on group
+                        if (capacity > Animals.Count && groupOrType[0] == a.GetType().Name.ToLower()[0] && (animalSize.Contains(a.Size) || animalSize == "A"))
                         {
-                            if (int.TryParse(d.ToString(), out int result))
-                            {
-                                Capacity = result;
-                            }
-                            else if (char.IsUpper(d))
-                            {
-                                AnimalSize += d;
-                            }
-                            else if (char.IsLower(d))
-                            {
-                                Group = d;
-                            }
-                        }
-
-                        var placeholder = a.GetType().Name;
-
-                        if (Capacity > Animals.Count && Group == a.GetType().Name.ToLower()[0] && (AnimalSize.Contains(a.Size) || AnimalSize == "A"))
-                        {
-
                             return true;
                         }
                     }
                     else if (suitabilityType == 'A')
                     {
-                        string details = suitabilityParts[i];
-                        string suitableAnimal = "";
+                        // Add the suitable animal to the list of suitable animals
+                        SuitableAnimals.Add(groupOrType);
 
-                        // Group suitability
-                        foreach (char d in details)
-                        {
-                            if (int.TryParse(d.ToString(), out int result))
-                            {
-                                Capacity = result;
-                            }
-                            else if (char.IsUpper(d))
-                            {
-                                AnimalSize += d;
-                            }
-                            else if (char.IsLower(d))
-                            {
-                                suitableAnimal += d;
-                            }
-                        }
-
-                        SuitableAnimals.Add(suitableAnimal);
-
-                        if (Capacity > Animals.Count && SuitableAnimals.Contains(a.Type.ToLower()) && (AnimalSize.Contains(a.Size) || AnimalSize == "A"))
+                        // Check if the animal is suitable for the unit based on type
+                        if (capacity > Animals.Count && SuitableAnimals.Contains(a.Type.ToLower()) && (animalSize.Contains(a.Size) || animalSize == "A"))
                         {
                             return true;
                         }
@@ -337,8 +363,8 @@ namespace Clyde_Conservatory
             }
             else
             {
-                // If the unit is not empty
-                if (Animals.Count < Capacity && SuitableAnimals.Contains(a.Type) && AnimalSize.Contains(a.Size))
+                // If the unit is not empty, check compatibility with the first animal
+                if (Animals.Count < Capacity && SuitableAnimals.Contains(a.Type) && Animals.First().DangerRating == a.DangerRating && AnimalSize.Contains(a.Size))
                 {
                     return true;
                 }
@@ -348,10 +374,13 @@ namespace Clyde_Conservatory
         }
 
 
-
+        /// <summary>
+        /// Updates the animals in the unit.
+        /// </summary>
+        /// <param name="animal">The animal to be added to the unit</param>
         public void UpdateCageAnimals(Animal animal)
         {
-            // Check if the animal is already in another unit and remove it
+            // Check if the animal is already in another unit. If it is, remove it
             foreach (var cage in Program.Cages)
             {
                 foreach (var unit in cage.Units)
@@ -367,7 +396,6 @@ namespace Clyde_Conservatory
             // If the unit is empty, adjust suitable animals based on AnimalSuitability.txt
             if (Animals.Count == 0)
             {
-                // Assuming AnimalSuitability.txt is in the same directory and contains suitability information
                 string[] lines = File.ReadAllLines(@"..\..\..\AnimalSuitability.txt");
                 foreach (string line in lines)
                 {
@@ -382,6 +410,7 @@ namespace Clyde_Conservatory
                     }
                 }
 
+                // if the unit doesn't have the set of suitable animals defined, add the animal to the set
                 if (SuitableAnimals.Count == 0)
                 {
                     SuitableAnimals.Add(animal.Type);
@@ -392,12 +421,79 @@ namespace Clyde_Conservatory
             // Add the animal to the unit
             Animals.Add(animal);
             animal.UnitAllocation = this;
-
         }
 
-        public void UpdateCageKeepers(int keeperId)
+        /// <summary>
+        /// Checks if a keeper is suitable for the unit.
+        /// </summary>
+        /// <returns>True if the keeper is suitable, false otherwise</returns>
+        public bool CheckKeeperSuitability(Keeper keeper)
         {
-            // Implementation to update cage keepers
+            // if the unit does not have any keepers or the number of keepers is less than the maximum number of keepers
+
+            if (Keepers.Count == 0 || Cage.Units.Count < Cage.Keepers.Count())
+            {
+                // if the cage keepers array is not full
+                if (Cage.Keepers.Count(k => k != null) < Cage.Keepers.Length)
+                {
+                    return true;
+                }
+                // if the keepers array for the unit cage is full but the keeper is already in the cage keepers array
+                else if (Cage.Keepers.Count(k => k != null) == Cage.Keepers.Length && Cage.Keepers.Contains(keeper))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Adds a keeper to the unit.
+        /// </summary>
+        public void AddCageKeeper(Keeper keeper)
+        {
+            //  if keeper is not in unit.cage.keepers, add it
+            //  Add keeper to unit.Keepers
+
+            if (!Cage.Keepers.Contains(keeper))
+            {
+                for (int i = 0; i < Cage.Keepers.Length; i++)
+                {
+                    if (Cage.Keepers[i] == null)
+                    {
+                        Cage.Keepers[i] = keeper;
+                        break;
+                    }
+                }
+            }
+
+            Keepers.Add(keeper);
+            keeper.Units.Add(this);
+        }
+
+        /// <summary>
+        /// Removes a keeper from the unit.
+        /// </summary>
+        public void RemoveCageKeeper(Keeper keeper)
+        {
+            Keepers.Remove(keeper);
+
+            // Remove unit from keeper.Units
+            keeper.Units.Remove(this);
+
+            // If keeper does not have any units of the same cage, remove keeper from cage.Keepers
+            if (!keeper.Units.Any(u => u.Cage == this.Cage))
+            {
+                for (int i = 0; i < Cage.Keepers.Length; i++)
+                {
+                    if (Cage.Keepers[i] == keeper)
+                    {
+                        Cage.Keepers[i] = null;
+                        break;
+                    }
+                }
+            }
         }
     }
 }

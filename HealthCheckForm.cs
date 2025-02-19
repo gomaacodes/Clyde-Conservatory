@@ -14,10 +14,12 @@ namespace College_Admissions
     public partial class HealthCheckForm : Form
     {
         private Animal animal;
-        public HealthCheckForm(ref Animal a)
+        private Form form;
+        public HealthCheckForm(ref Animal a, Form f)
         {
             InitializeComponent();
             animal = a;
+            form = f;
         }
         private void btnConfirm_Click(object sender, EventArgs e)
         {
@@ -34,7 +36,15 @@ namespace College_Admissions
             // Generate the health check record
             string vetName = txtVetName.Text.Trim();
             string status = rdbHealthy.Checked ? "Healthy" : "Sick";
-            string healthCheckRecord = $"{DateTime.Now}: Health check made by Vet {vetName} - Status: {status}\n";
+            string healthCheckRecord = $"{DateTime.Now.ToShortDateString()}: ";
+
+
+            if (form.GetType().ToString().Contains("AnimalForm"))
+            {
+                healthCheckRecord += "Emergency ";
+            }
+
+            healthCheckRecord += $"Health check made by Vet.{vetName} - Status: {status}\n";
             animal.Records += healthCheckRecord;
             this.Close();
             
@@ -42,8 +52,15 @@ namespace College_Admissions
 
         private void HealthCheckForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            AnimalEditingForm animalEditingForm = new(ref animal);
-            animalEditingForm.Show();
+            if (form.GetType().ToString().Contains("AnimalEditingForm"))
+            {
+                AnimalEditingForm animalEditingForm = new(animal);
+                animalEditingForm.Show();
+            }
+            else
+            {
+                form.Show();
+            }
         }
     }
 }

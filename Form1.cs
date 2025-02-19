@@ -1,5 +1,7 @@
+using College_Admissions;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Clyde_Conservatory
@@ -37,6 +39,12 @@ namespace Clyde_Conservatory
             CageForm cageManagement = new();
             cageManagement.Show();
             this.Hide();
+        }
+
+        private void btnGenWeeklyRep_Click(object sender, EventArgs e)
+        {
+            FileManager.GenerateWeeklyReport();
+            MessageBox.Show("Report generated sucessfully");
         }
     }
 }

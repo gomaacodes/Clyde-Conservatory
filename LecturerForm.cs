@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic.Devices;
+﻿using College_Admissions;
+using Microsoft.VisualBasic.Devices;
 using Org.BouncyCastle.Utilities.IO.Pem;
 using System;
 using System.Collections.Generic;
@@ -27,91 +28,64 @@ namespace Clyde_Conservatory
         private void KeeperForm_Load(object sender, EventArgs e)
         {
             LoadListView();                                         //Add Columns to listview
-            LoadData(Program.Animals);                                  //Load fetched records into listView
+            LoadData();                                  //Load fetched records into listView
             AutoFitColumns();                                       //Adjust columns' width to autofit
         }
 
         private void lvRecords_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)     //When the highlighted row is changed
         {
-            this.Width = 987;                                       //Expand the window size
-
             if (lvRecords.SelectedItems.Count != 1)             //Check if user is attempting to click away from a record or multi select records
             {
                 lvRecords.SelectedItems.Clear();                //Unselect the highlighted rows
-                lblRecord.Text = "";                            //Clear the record label on the right side
                 rtbRecord.Clear();                              //Clear the record description
-                btnDelete.Enabled = false;                          //Disable both buttons
                 btnEdit.Enabled = false;
+                btnEdit.Visible = false;
+                btnDelete.Enabled = false;
+                btnDelete.Visible = false;
             }
             else
             {
                 DisplayKeeper();                                                                            //Display fetched record's details on the right side
+                btnEdit.Enabled = true;
+                btnEdit.Visible = true;
+                btnDelete.Enabled = true;
+                btnDelete.Visible = true;
             }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-        //    foreach (var session in lecturer.SubjectSessions)
-        //    {
-        //        if (session.Course.Status != "Cancelled")
-        //        {
-        //            MessageBox.Show("Can't delete a Lecturer with sessions in courses that are not cancelled");
-        //            return;
-        //        }
-
-        //    }
-
-
-        //    new LecturerRepository().DeleteById(typeof(Lecturer), lecturer.LecturerID.ToString());      //Delete selected record
-        //    MessageBox.Show("Deleted Successfully");
-
-        //    lecturers = new LecturerRepository().GetAll();                                                  //Refetch all records
-        //    LoadData(lecturers);                                                                              //Load records to listView
+            if (keeper.Units.Count > 0)
+            {
+                MessageBox.Show("Can't Delete a keeper with Assigned cages");
+            }
+            else
+            {
+                Program.Keepers.Remove(keeper);
+                Program.Records.Add($"{DateTime.Now.ToShortDateString()}: Keeper - {keeper.KeeperId} - {keeper.Surname}: Was let go.");
+                LoadData();
+            }
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-        //    LecturerCUForm lecturerCU = new(lecturer);                                       //Initialise a Create/Update Form
-        //    lecturerCU.Show();                                                                                //Show New form
-        //    this.Hide();                                                                                        //Hide Current Form
+            EditKeeperForm keeperForm = new(keeper);
+            keeperForm.Show();
+            this.Hide();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-        //    lecturer = new Lecturer();                                                                      //Initialise a new record
-        //    lecturer.LecturerID = lecturers.Count == 0 ? 49648433 : lecturers[lecturers.Count - 1].LecturerID + 1;                  //Set Record's ID, Will vary from one form to the other
-
-        //    LecturerCUForm lecturerCU = new(lecturer);                                       //Initialise a Create/Update Form
-        //    lecturerCU.Show();                                                                                //Show New form
-        //    this.Hide();                                                                                        //Hide Current Form
-        }
-
-        private void btnExport_Click(object sender, EventArgs e)
-        {
-        //    using (SaveFileDialog saveFileDialog = new SaveFileDialog())
-        //    {
-        //        saveFileDialog.Filter = "CSV Files (*.csv)|*.csv";
-        //        if (saveFileDialog.ShowDialog() == DialogResult.OK)
-        //        {
-        //            // Call the static method from Program.cs to export ListView to CSV
-        //            Program.ExportListViewToCsv(lvRecords, saveFileDialog.FileName);
-        //            MessageBox.Show("Export Successful!");
-        //        }
-        //    }
-        }
-        private void txtSearch_TextChanged(object sender, EventArgs e)
-        {
-        //    LoadData(SearchResults());                                                                          //Search for Text in search bar
-        }
-
-        private void rdo_CheckedChanged(object sender, EventArgs e)
-        {
-        //    LoadData(SearchResults());
+            NewKeeperForm keeperForm = new();
+            keeperForm.Show();
+            this.Hide();
         }
 
 
         private void KeeperForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            FileManager.SaveKeepers([@"..\..\..\Keepers.txt", @"..\..\..\K-Records.txt"], Program.Keepers, Program.Records);
+
             Form1 form = new();
             form.Show();                                                                                        //Go back to previous form
         }
@@ -126,12 +100,11 @@ namespace Clyde_Conservatory
             lvRecords.Columns.Add("Forename");
             lvRecords.Columns.Add("Surname");
             lvRecords.Columns.Add("Position");
-            lvRecords.Columns.Add("Available");
             lvRecords.Columns.Add("Units left");
 
         }
 
-        public void LoadData(List<Animal> lecturers)
+        public void LoadData()
         {
             lvRecords.Items.Clear();
 
@@ -142,7 +115,6 @@ namespace Clyde_Conservatory
                 listitem.SubItems.Add(keeper.Forename);          //Add Subsequent columns
                 listitem.SubItems.Add(keeper.Surname);
                 listitem.SubItems.Add(keeper.Position);
-                listitem.SubItems.Add(keeper.Availability.ToString());
                 listitem.SubItems.Add(keeper.unitsLeft());
 
                 lvRecords.Items.Add(listitem);                              //Add finalised item to listview
@@ -166,7 +138,7 @@ namespace Clyde_Conservatory
 
             var placeholder = "";
 
-            lblRecord.Text = $"Name: {keeper.Forename} {keeper.Surname}";                                                         //Set the record's identifying text in the label
+            placeholder += $"Name: {keeper.Forename} {keeper.Surname}\n\n";                                                         //Set the record's identifying text in the label
             placeholder += $"Keeper ID: {keeper.KeeperId}\n\n";
 
             placeholder += keeper.DisplayKeeperDetails();
@@ -174,53 +146,6 @@ namespace Clyde_Conservatory
 
             rtbRecord.Text = placeholder;                                                                       // Set the placeholder text to the rich text box
             btnEdit.Enabled = true;                                                                             // Enable the edit button
-            btnDelete.Enabled = true;                                                                           // Enable the delete button
-        }
-
-
-        private List<Animal> SearchResults()
-        {
-            //    string lecturerToSearch = txtSearch.Text.ToLower();                                               // Convert search text to lowercase
-            //    List<Lecturer> lecturersFound = new List<Lecturer>();                                         // Initialize list to store found records
-
-            //    foreach (Lecturer lecturer in lecturers)
-            //    {
-            //        if (lecturerToSearch == "" || lecturerToSearch.All(c => c == ' '))
-            //        {
-            //            lecturersFound = lecturers; // Add all records
-            //        }
-            //        else if (rdoFirstName.Checked)
-            //        {
-            //            if (lecturer.FirstName.ToLower().StartsWith(lecturerToSearch))
-            //            {
-            //                lecturersFound.Add(lecturer); // Add matching record by title
-            //            }
-            //        }
-            //        else if (rdoLastName.Checked)
-            //        {
-            //            if (lecturer.LastName.ToLower().StartsWith(lecturerToSearch))
-            //            {
-            //                lecturersFound.Add(lecturer); // Add matching record by author
-            //            }
-            //        }
-            //        else if (rdoDepartment.Checked)
-            //        {
-            //            if (lecturer.Department.Title.ToLower().StartsWith(lecturerToSearch))
-            //            {
-            //                lecturersFound.Add(lecturer); // Add matching courses by author
-            //            }
-            //        }
-            //        else if (rdoLecturerID.Checked)
-            //        {
-            //            if (lecturer.LecturerID.ToString().StartsWith(lecturerToSearch))
-            //            {
-            //                lecturersFound.Add(lecturer); // Add matching record by author
-            //            }
-            //        }
-            //    }
-
-            //    return lecturersFound; // Return list of found records
-            return null;
         }
     }
 }

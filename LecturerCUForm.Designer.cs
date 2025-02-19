@@ -57,6 +57,7 @@
             rdbUnit = new RadioButton();
             lblUpdate = new Label();
             btnCheckHealth = new Button();
+            btnRelinquishOwnership = new Button();
             grbxEmergencyShare.SuspendLayout();
             grbxUpdate.SuspendLayout();
             SuspendLayout();
@@ -112,6 +113,7 @@
             rdbYes.Text = "Yes";
             rdbYes.UseVisualStyleBackColor = true;
             rdbYes.Visible = false;
+            rdbYes.CheckedChanged += EmergencyShare_CheckedChanged;
             // 
             // rdbNo
             // 
@@ -125,6 +127,7 @@
             rdbNo.Text = "No";
             rdbNo.UseVisualStyleBackColor = true;
             rdbNo.Visible = false;
+            rdbNo.CheckedChanged += EmergencyShare_CheckedChanged;
             // 
             // btnEndLoan
             // 
@@ -135,6 +138,7 @@
             btnEndLoan.Text = "Terminate Loan";
             btnEndLoan.UseVisualStyleBackColor = true;
             btnEndLoan.Visible = false;
+            btnEndLoan.Click += btnEndLoan_Click;
             // 
             // lblGaveBirth
             // 
@@ -223,6 +227,7 @@
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Visible = false;
+            btnAdd.Click += btnAdd_Click;
             // 
             // lblLandSpeed
             // 
@@ -251,6 +256,7 @@
             clbMates.Size = new Size(242, 58);
             clbMates.TabIndex = 53;
             clbMates.Visible = false;
+            clbMates.SelectedIndexChanged += clbMates_SelectedIndexChanged;
             // 
             // btnLoanOut
             // 
@@ -261,6 +267,7 @@
             btnLoanOut.Text = "Loan Out";
             btnLoanOut.UseVisualStyleBackColor = true;
             btnLoanOut.Visible = false;
+            btnLoanOut.Click += btnLoanOut_Click;
             // 
             // lblEmergencyShare
             // 
@@ -281,6 +288,7 @@
             clbCages.Size = new Size(242, 58);
             clbCages.TabIndex = 49;
             clbCages.Visible = false;
+            clbCages.SelectedIndexChanged += clbCages_SelectedIndexChanged;
             // 
             // lblCage
             // 
@@ -361,11 +369,23 @@
             btnCheckHealth.Visible = false;
             btnCheckHealth.Click += btnCheckHealth_Click;
             // 
+            // btnRelinquishOwnership
+            // 
+            btnRelinquishOwnership.Location = new Point(23, 194);
+            btnRelinquishOwnership.Name = "btnRelinquishOwnership";
+            btnRelinquishOwnership.Size = new Size(246, 63);
+            btnRelinquishOwnership.TabIndex = 70;
+            btnRelinquishOwnership.Text = "Relinquish Ownership";
+            btnRelinquishOwnership.UseVisualStyleBackColor = true;
+            btnRelinquishOwnership.Visible = false;
+            btnRelinquishOwnership.Click += btnRelinquishOwnership_Click;
+            // 
             // AnimalEditingForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(293, 433);
+            Controls.Add(btnRelinquishOwnership);
             Controls.Add(lblMates);
             Controls.Add(lblFlightSpeed);
             Controls.Add(lblGaveBirth);
@@ -392,8 +412,8 @@
             Controls.Add(btnSave);
             Name = "AnimalEditingForm";
             Text = "Animal Editing";
-            FormClosed += LecturerCUForm_FormClosed;
             Load += AnimalEditingForm_Load;
+            Shown += AnimalEditingForm_Shown;
             grbxEmergencyShare.ResumeLayout(false);
             grbxEmergencyShare.PerformLayout();
             grbxUpdate.ResumeLayout(false);
@@ -435,5 +455,6 @@
         private Label lblLandSpeed;
         private TextBox txtFlightSpeed;
         private Button btnCheckHealth;
+        private Button btnRelinquishOwnership;
     }
 }

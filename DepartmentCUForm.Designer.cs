@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lblRecord = new Label();
             lblName = new Label();
             txtName = new TextBox();
             lblBirthDate = new Label();
@@ -83,16 +82,6 @@
             grbxAcquisitionType.SuspendLayout();
             grbxSize.SuspendLayout();
             SuspendLayout();
-            // 
-            // lblRecord
-            // 
-            lblRecord.AutoSize = true;
-            lblRecord.Font = new Font("Segoe UI", 12F);
-            lblRecord.Location = new Point(16, 13);
-            lblRecord.Name = "lblRecord";
-            lblRecord.Size = new Size(52, 21);
-            lblRecord.TabIndex = 0;
-            lblRecord.Text = "label1";
             // 
             // lblName
             // 
@@ -627,7 +616,6 @@
             Controls.Add(lblBirthDate);
             Controls.Add(txtName);
             Controls.Add(lblName);
-            Controls.Add(lblRecord);
             Name = "AddAnimalForm";
             Text = "AddAnimalForm";
             FormClosed += AddAnimalForm_FormClosed;

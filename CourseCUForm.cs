@@ -54,8 +54,12 @@ namespace Clyde_Conservatory
                     {
                         if (unit.UnitId == (int)item)
                         {
+                            Program.Animals.Add(animal);
                             unit.UpdateCageAnimals(animal);
                             animal.UnitAllocation = unit;
+                            animal.Records += $"{DateTime.Now.ToShortDateString()}: Animal under Ownership\n";
+                            animal.Records += $"{DateTime.Now.ToShortDateString()}: Allocated to unit {unit.UnitId} ";
+
                             break;
                         }
                     }

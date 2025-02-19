@@ -32,7 +32,7 @@
             btnCageManagement = new Button();
             btnNewAnimal = new Button();
             btnKeeperManagement = new Button();
-            button1 = new Button();
+            btnGenWeeklyRep = new Button();
             SuspendLayout();
             // 
             // btnAnimalManagement
@@ -79,22 +79,23 @@
             btnKeeperManagement.UseVisualStyleBackColor = true;
             btnKeeperManagement.Click += btnKeeperManagement_Click;
             // 
-            // button1
+            // btnGenWeeklyRep
             // 
-            button1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.Location = new Point(12, 224);
-            button1.Name = "button1";
-            button1.Size = new Size(291, 47);
-            button1.TabIndex = 9;
-            button1.Text = "Generate Weekly Report";
-            button1.UseVisualStyleBackColor = true;
+            btnGenWeeklyRep.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnGenWeeklyRep.Location = new Point(12, 224);
+            btnGenWeeklyRep.Name = "btnGenWeeklyRep";
+            btnGenWeeklyRep.Size = new Size(291, 47);
+            btnGenWeeklyRep.TabIndex = 9;
+            btnGenWeeklyRep.Text = "Generate Weekly Report";
+            btnGenWeeklyRep.UseVisualStyleBackColor = true;
+            btnGenWeeklyRep.Click += btnGenWeeklyRep_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(318, 286);
-            Controls.Add(button1);
+            Controls.Add(btnGenWeeklyRep);
             Controls.Add(btnKeeperManagement);
             Controls.Add(btnNewAnimal);
             Controls.Add(btnCageManagement);
@@ -109,6 +110,6 @@
         private Button btnCageManagement;
         private Button btnNewAnimal;
         private Button btnKeeperManagement;
-        private Button button1;
+        private Button btnGenWeeklyRep;
     }
 }

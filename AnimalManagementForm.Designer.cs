@@ -37,7 +37,7 @@
             // btnEdit
             // 
             btnEdit.Font = new Font("Segoe UI", 12F);
-            btnEdit.Location = new Point(758, 371);
+            btnEdit.Location = new Point(867, 372);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(201, 33);
             btnEdit.TabIndex = 4;
@@ -50,35 +50,35 @@
             lvRecords.Font = new Font("Segoe UI", 12F);
             lvRecords.Location = new Point(12, 12);
             lvRecords.Name = "lvRecords";
-            lvRecords.Size = new Size(600, 342);
+            lvRecords.Size = new Size(692, 342);
             lvRecords.TabIndex = 12;
             lvRecords.UseCompatibleStateImageBehavior = false;
             lvRecords.ItemSelectionChanged += lvRecords_ItemSelectionChanged;
             // 
             // rtbRecord
             // 
-            rtbRecord.Location = new Point(624, 12);
+            rtbRecord.Location = new Point(710, 12);
             rtbRecord.Name = "rtbRecord";
-            rtbRecord.Size = new Size(335, 342);
+            rtbRecord.Size = new Size(358, 342);
             rtbRecord.TabIndex = 15;
             rtbRecord.Text = "";
-            rtbRecord.TextChanged += rtbRecord_TextChanged;
             // 
             // btnEmergencyCheck
             // 
             btnEmergencyCheck.Font = new Font("Segoe UI", 12F);
-            btnEmergencyCheck.Location = new Point(758, 410);
+            btnEmergencyCheck.Location = new Point(867, 411);
             btnEmergencyCheck.Name = "btnEmergencyCheck";
             btnEmergencyCheck.Size = new Size(201, 33);
             btnEmergencyCheck.TabIndex = 16;
             btnEmergencyCheck.Text = "Emergency Health Check";
             btnEmergencyCheck.UseVisualStyleBackColor = true;
+            btnEmergencyCheck.Click += btnEmergencyCheck_Click;
             // 
             // AnimalForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(971, 466);
+            ClientSize = new Size(1080, 466);
             Controls.Add(btnEmergencyCheck);
             Controls.Add(rtbRecord);
             Controls.Add(lvRecords);

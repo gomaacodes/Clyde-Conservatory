@@ -36,8 +36,6 @@ namespace Clyde_Conservatory
             {
                 lvRecords.SelectedItems.Clear();                //Unselect the highlighted rows
                 rtbRecord.Clear();                              //Clear the record description
-                btnDelete.Enabled = false;                          //Disable both buttons
-                btnEdit.Enabled = false;
             }
             else
             {
@@ -163,58 +161,7 @@ namespace Clyde_Conservatory
 
 
             rtbRecord.Text = placeholder;                                                                       // Set the placeholder text to the rich text box
-            btnEdit.Enabled = true;                                                                             // Enable the edit button
         }
-        private List<Animal> SearchResults()
-        {
-        //    string courseToSearch = txtSearch.Text.ToLower(); // Convert search text to lowercase
-        //    List<Course> coursesFound = new List<Course>(); // Initialize list to store found courses
-
-        //    foreach (Course course in courses)
-        //    {
-        //        if (courseToSearch == "" || courseToSearch.All(c => c == ' '))
-        //        {
-        //            coursesFound = courses; // Add all records
-        //        }
-        //        else if (rdoTitle.Checked)
-        //        {
-        //            if (course.Title.ToLower().StartsWith(courseToSearch))
-        //            {
-        //                coursesFound.Add(course); // Add matching courses by title
-        //            }
-        //        }
-        //        else if (rdoLevel.Checked)
-        //        {
-        //            if (course.SqaLevel.ToLower().StartsWith(courseToSearch))
-        //            {
-        //                coursesFound.Add(course); // Add matching courses by author
-        //            }
-        //        }
-        //        else if (rdoType.Checked)
-        //        {
-        //            if (course.Type.ToLower().StartsWith(courseToSearch))
-        //            {
-        //                coursesFound.Add(course); // Add matching courses by author
-        //            }
-        //        }
-        //        else if (rdoDepartment.Checked)
-        //        {
-        //            if (course.Department.Title.ToLower().StartsWith(courseToSearch))
-        //            {
-        //                coursesFound.Add(course); // Add matching courses by author
-        //            }
-        //        }
-        //        else if (rdoCode.Checked)
-        //        {
-        //            if (course.CourseID.ToString().StartsWith(courseToSearch))
-        //            {
-        //                coursesFound.Add(course); // Add matching courses by author
-        //            }
-        //        }
-        //    }
-
-        //    return coursesFound; // Return list of found departments
-        return null;
-        }
+       
     }
 }

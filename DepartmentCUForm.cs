@@ -91,8 +91,6 @@ namespace Clyde_Conservatory
             if (animal != null)
             {
                 // Save the animal to the database or list
-                Program.Animals.Add(animal);
-                MessageBox.Show("Animal details saved successfully!");
                 CageAllocationForm cageAllocationForm = new(ref animal);
                 cageAllocationForm.Show();
                 this.Close();
@@ -195,7 +193,7 @@ namespace Clyde_Conservatory
         {
             try
             {
-                int ID = Program.Animals.Count + 1;
+                int ID = Program.Animals[Program.Animals.Count - 1].AnimalId + 1;
 
                 string name = txtName.Text.Trim();
                 if (!IsValidText(name)) return;
