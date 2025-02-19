@@ -78,6 +78,7 @@ namespace Clyde_Conservatory
         /// </summary>
         public void LoadData(List<Cage> cages)
         {
+            lvRecords.Items.Clear();
             foreach (var cage in Program.Cages)
             {
                 foreach (var unit in cage.Units)
@@ -137,21 +138,28 @@ namespace Clyde_Conservatory
         {
             if (unit == null)
             {
-                MessageBox.Show("No unit selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No unit selected.");
                 return;
-            }
-
-            if (unit.Animals.Count == 0 && unit.Keepers.Count == 0)
-            {
-                cage.Units.Remove(unit);
-                MessageBox.Show("Unit removed from cage.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                unit.Animals.Clear();
+                foreach (Animal a in unit.Animals)
+                {
+                    a.AcquisitionType = 'L';
+                }
+                foreach (Keeper k in unit.Keepers)
+                {
+                    k.Units.Remove(unit);
+                }
+
                 unit.Keepers.Clear();
+                unit.Animals.Clear();
                 cage.Units.Remove(unit);
-                MessageBox.Show("Unit's animals and keepers removed, then unit removed from cage.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (cage.Units.Count == 1)
+                {
+                    Program.Cages.Remove(cage);
+                } 
+                
             }
 
             LoadData(Program.Cages); // Refresh the list view
