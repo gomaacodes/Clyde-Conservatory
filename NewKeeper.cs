@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
-namespace College_Admissions
+namespace Clyde_Conservatory
 {
     public partial class NewKeeperForm : Form
     {

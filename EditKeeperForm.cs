@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace College_Admissions
+namespace Clyde_Conservatory
 {
     public partial class EditKeeperForm : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace College_Admissions
+﻿namespace Clyde_Conservatory
 {
     partial class EditKeeperForm
     {
