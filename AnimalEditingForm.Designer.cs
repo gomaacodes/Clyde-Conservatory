@@ -199,7 +199,6 @@
             lblWingSpan.TabIndex = 61;
             lblWingSpan.Text = "Wingspan (cm)";
             lblWingSpan.Visible = false;
-            lblWingSpan.Click += label2_Click;
             // 
             // rtxtGaveBirth
             // 
@@ -413,7 +412,6 @@
             Name = "AnimalEditingForm";
             Text = "Animal Editing";
             Load += AnimalEditingForm_Load;
-            Shown += AnimalEditingForm_Shown;
             grbxEmergencyShare.ResumeLayout(false);
             grbxEmergencyShare.PerformLayout();
             grbxUpdate.ResumeLayout(false);

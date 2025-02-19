@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="LecturerCUForm.cs" />
+    <Compile Update="AnimalEditingForm.cs" />
     <Compile Update="KeeperForm.cs" />
     <Compile Update="CageForm.cs">
       <SubType>Form</SubType>

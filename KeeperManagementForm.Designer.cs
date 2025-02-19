@@ -101,7 +101,7 @@
             Controls.Add(btnAdd);
             Controls.Add(btnEdit);
             Name = "KeeperForm";
-            Text = "Form2";
+            Text = "Keeper Management";
             FormClosed += KeeperForm_FormClosed;
             Load += KeeperForm_Load;
             ResumeLayout(false);

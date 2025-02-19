@@ -161,6 +161,12 @@ namespace Clyde_Conservatory
             }
         }
 
+        private void SetEmergencyShareStatus()
+        {
+            rdbYes.Checked = animal.EmergencyShare;
+            rdbNo.Checked = !animal.EmergencyShare;
+        }
+
         private void LoadCurrentCage()
         {
             clbCages.Items.Clear();
@@ -169,12 +175,6 @@ namespace Clyde_Conservatory
             {
                 clbCages.Items.Add(animal.UnitAllocation.UnitId, true);
             }
-        }
-
-        private void SetEmergencyShareStatus()
-        {
-            rdbYes.Checked = animal.EmergencyShare;
-            rdbNo.Checked = !animal.EmergencyShare;
         }
 
         private void LoadSuitableCages()
@@ -188,6 +188,26 @@ namespace Clyde_Conservatory
                         clbCages.Items.Add(unit.UnitId);
                     }
                 }
+            }
+        }
+
+        private void ManageCheckedItem(object sender)
+        {
+            CheckedListBox listBox = (CheckedListBox)sender;
+
+            if (listBox.SelectedItem != null)
+            {
+                listBox.SetItemChecked(listBox.SelectedIndex, true);
+
+                for (int i = 0; i < listBox.Items.Count; ++i)
+                {
+                    if (i != listBox.SelectedIndex)
+                    {
+                        listBox.SetItemChecked(i, false);
+                    }
+                }
+
+                listBox.ClearSelected();
             }
         }
 
@@ -308,30 +328,6 @@ namespace Clyde_Conservatory
             lecturerForm.Show();
         }
 
-        private void ManageCheckedItem(object sender)
-        {
-            CheckedListBox listBox = (CheckedListBox)sender;
-
-            if (listBox.SelectedItem != null)
-            {
-                listBox.SetItemChecked(listBox.SelectedIndex, true);
-
-                for (int i = 0; i < listBox.Items.Count; ++i)
-                {
-                    if (i != listBox.SelectedIndex)
-                    {
-                        listBox.SetItemChecked(i, false);
-                    }
-                }
-
-                listBox.ClearSelected();
-            }
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnCheckHealth_Click(object sender, EventArgs e)
         {
@@ -481,11 +477,6 @@ namespace Clyde_Conservatory
                 rtxtGaveBirth.AppendText($"{dtpGaveBirth.Value.ToShortDateString()}\n");
                 dtpGaveBirth.Value = DateTime.Now;
             }
-        }
-
-        private void AnimalEditingForm_Shown(object sender, EventArgs e)
-        {
-            // MessageBox.Show("Here");
         }
     }
 }
