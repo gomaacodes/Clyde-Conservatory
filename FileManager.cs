@@ -39,7 +39,7 @@ namespace Clyde_Conservatory
         /// <param name="filePath">The path to the text file containing unit data</param>
         /// <param name="cages">The list of cages to which units will be assigned</param>
         /// <returns>A list of units</returns>
-        public static List<Unit> LoadUnits(string filePath, List<Cage> cages)
+        public static void LoadUnits(string filePath, List<Cage> cages)
         {
             List<Unit> units = new List<Unit>();
             using(StreamReader streamReader = new StreamReader(filePath))
@@ -63,7 +63,6 @@ namespace Clyde_Conservatory
                     }
                 }
             }           
-            return units;
         }
 
         /// <summary>

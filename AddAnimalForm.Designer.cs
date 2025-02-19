@@ -618,8 +618,6 @@
             Controls.Add(lblName);
             Name = "AddAnimalForm";
             Text = "AddAnimalForm";
-            FormClosed += AddAnimalForm_FormClosed;
-            Load += AddAnimalForm_Load;
             grbxGroup.ResumeLayout(false);
             grbxGroup.PerformLayout();
             grbxSex.ResumeLayout(false);

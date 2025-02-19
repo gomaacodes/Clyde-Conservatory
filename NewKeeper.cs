@@ -22,9 +22,14 @@ namespace Clyde_Conservatory
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-
+            KeeperForm keeperForm = new();
+            keeperForm.Show();
+            this.Close();
         }
 
+        /// <summary>
+        /// When the save button is clicked, check if all fields are filled in and then save the keeper
+        /// </summary>
         private void btnSave_Click(object sender, EventArgs e)
         {
             foreach (Control control in this.Controls)
@@ -50,6 +55,9 @@ namespace Clyde_Conservatory
             }
         }
 
+        /// <summary>
+        /// Validate the input fields and create a new keeper
+        /// </summary>
         private void ValidateAndCreateKeeper(ref Keeper keeper)
         {
             int ID = Program.Keepers[Program.Keepers.Count - 1].KeeperId + 1;
@@ -74,11 +82,19 @@ namespace Clyde_Conservatory
             keeper = new Keeper(ID, forename, surname, address, phoneNum, position, numCages);
         }
 
+        /// <summary>
+        /// Check if the input is valid text
+        /// </summary>
+        /// <returns>True if the input is valid text, false otherwise</returns>
         private bool IsValidText(string input)
         {
             return Regex.IsMatch(input, @"^[A-Za-z\s]+$");
         }
 
+        /// <summary>
+        /// Try to parse the input as an integer
+        /// </summary>
+        /// <returns>True if the input is an integer, false otherwise</returns>
         private bool TryParseInt(string input, out int result)
         {
             return int.TryParse(input, out result);

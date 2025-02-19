@@ -25,6 +25,9 @@ namespace Clyde_Conservatory
             InitializeComponent();
         }
 
+        /// <summary>
+        /// When the form is loaded, load the list view, load the data, and autofit the columns
+        /// </summary>
         private void AnimalForm_Load(object sender, EventArgs e)
         {
             LoadListView();                                         //Add Columns to listview
@@ -32,6 +35,9 @@ namespace Clyde_Conservatory
             AutoFitColumns();                                       //Adjust columns' width to autofit
         }
 
+        /// <summary>
+        /// When the highlighted row is changed
+        /// </summary>
         private void lvRecords_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)     //When the highlighted row is changed
         {
             if (lvRecords.SelectedItems.Count != 1)             //Check if user is attempting to click away from a record or multi select records
@@ -53,6 +59,9 @@ namespace Clyde_Conservatory
             this.Hide();
         }
 
+        /// <summary>
+        /// When the form is closed, go back to the previous form, and save the animals to the txt file
+        /// </summary>
         private void AnimalForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             // Update animals txt
@@ -62,6 +71,9 @@ namespace Clyde_Conservatory
             form.Show();                                                                                        //Go back to previous form
         }
 
+        /// <summary>
+        /// Load the list view with the columns
+        /// </summary>
         public void LoadListView()
         {
             lvRecords.View = View.Details;                      //Used to Set how items are displayed in the listview
@@ -80,6 +92,9 @@ namespace Clyde_Conservatory
             lvRecords.Columns.Add("Ins. Value");
         }
 
+        /// <summary>
+        /// Load the data from the Animals list into the list view
+        /// </summary>
         public void LoadData()
         {
             lvRecords.Items.Clear();
@@ -102,6 +117,9 @@ namespace Clyde_Conservatory
             }
         }
 
+        /// <summary>
+        /// Adjust the columns' width to fit the content
+        /// </summary>
         private void AutoFitColumns()
         {
             // Auto-resize each column to fit the content
@@ -111,12 +129,17 @@ namespace Clyde_Conservatory
             }
         }
 
+        /// <summary>
+        /// Display the selected animal's details in the rich text box
+        /// </summary>
         private void DisplayAnimal()
         {
+            // Get the selected animal from the list view
             id = Convert.ToInt32(lvRecords.SelectedItems[0].SubItems[0].Text);
             animal = Program.Animals.FirstOrDefault(a => a.AnimalId == id);
 
 
+            // Create a placeholder string to display the animal's details
             var placeholder = "";
 
             placeholder += $"Name: {animal.Name}\n";                                                         //Set the record's identifying text in the label
@@ -139,7 +162,7 @@ namespace Clyde_Conservatory
 
             placeholder += animal.DisplayUniqueAttributes();
 
-
+            // Display the animal's details in the rich text box
             rtbRecord.Text = placeholder;                                                                       // Set the placeholder text to the rich text box
             btnEdit.Enabled = true;                                                                             // Enable the edit button
         }

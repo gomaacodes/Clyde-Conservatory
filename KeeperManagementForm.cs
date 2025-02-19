@@ -32,6 +32,9 @@ namespace Clyde_Conservatory
             AutoFitColumns();                                       //Adjust columns' width to autofit
         }
 
+        /// <summary>
+        /// When the highlighted row is changed, display the keeper's details, and enable the edit button
+        /// </summary>
         private void lvRecords_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)     //When the highlighted row is changed
         {
             if (lvRecords.SelectedItems.Count != 1)             //Check if user is attempting to click away from a record or multi select records
@@ -53,6 +56,9 @@ namespace Clyde_Conservatory
             }
         }
 
+        /// <summary>
+        /// When the delete button is clicked, remove the keeper from the list of keepers
+        /// </summary>
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (keeper.Units.Count > 0)
@@ -81,7 +87,9 @@ namespace Clyde_Conservatory
             this.Hide();
         }
 
-
+        /// <summary>
+        /// When the form is closed, go back to the previous form, and save the keepers to the txt file
+        /// </summary>
         private void KeeperForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             FileManager.SaveKeepers([@"..\..\..\Keepers.txt", @"..\..\..\K-Records.txt"], Program.Keepers, Program.Records);
@@ -90,6 +98,9 @@ namespace Clyde_Conservatory
             form.Show();                                                                                        //Go back to previous form
         }
 
+        /// <summary>
+        /// Load the list view with the columns
+        /// </summary>
         public void LoadListView()
         {
             lvRecords.View = View.Details;                      //Used to Set how items are displayed in the listview
@@ -104,6 +115,9 @@ namespace Clyde_Conservatory
 
         }
 
+        /// <summary>
+        /// Load the data from the Keepers list into the list view
+        /// </summary>
         public void LoadData()
         {
             lvRecords.Items.Clear();
@@ -115,12 +129,15 @@ namespace Clyde_Conservatory
                 listitem.SubItems.Add(keeper.Forename);          //Add Subsequent columns
                 listitem.SubItems.Add(keeper.Surname);
                 listitem.SubItems.Add(keeper.Position);
-                listitem.SubItems.Add(keeper.unitsLeft());
+                listitem.SubItems.Add(keeper.UnitsLeft());
 
                 lvRecords.Items.Add(listitem);                              //Add finalised item to listview
             }
         }
 
+        /// <summary>
+        /// Adjust the columns' width to autofit
+        /// </summary>
         private void AutoFitColumns()
         {
             // Auto-resize each column to fit the content
@@ -130,6 +147,9 @@ namespace Clyde_Conservatory
             }
         }
 
+        /// <summary>
+        /// Display the keeper's details in the rich text box
+        /// </summary>
         private void DisplayKeeper()
         {
             id = Convert.ToInt32(lvRecords.SelectedItems[0].SubItems[0].Text);

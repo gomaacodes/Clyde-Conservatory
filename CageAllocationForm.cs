@@ -17,9 +17,7 @@ namespace Clyde_Conservatory
     {
         private Animal animal = null;
         private bool emergencyShare = false;
-        //private List<Department> departments = null;
 
-        //public CageAllocationForm(Course argCourse)
         public CageAllocationForm(ref Animal a)
         {
             InitializeComponent();
@@ -37,6 +35,9 @@ namespace Clyde_Conservatory
             ManageCheckedItem(sender);
         }
 
+        /// <summary>
+        /// Save the animal to the selected cage
+        /// </summary>
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (clbCages.CheckedItems.Count == 0)
@@ -73,15 +74,14 @@ namespace Clyde_Conservatory
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            //    this.Close();
+            AnimalForm animalForm = new();
+            animalForm.Show();
+            this.Close();
         }
 
-        private void CageAllocationForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            //    CageForm courseForm = new();
-            //    courseForm.Show();
-        }
-
+        /// <summary>
+        /// Manage the checked item in the checked list box
+        /// </summary>
         private void ManageCheckedItem(object sender)
         {
             // Get the CheckedListBox instance
@@ -107,6 +107,9 @@ namespace Clyde_Conservatory
             }
         }
 
+        /// <summary>
+        /// Toggle the emergency share
+        /// </summary>
         private void btnToggle_Click(object sender, EventArgs e)
         {
             //Toggle the emergency share
@@ -124,7 +127,9 @@ namespace Clyde_Conservatory
             LoadCages();
         }
 
-        //Load the cages into the checked list box
+        /// <summary>
+        /// Load the cages into the checked list box
+        /// </summary>
         private void LoadCages()
         {
             clbCages.Items.Clear();

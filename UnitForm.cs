@@ -29,6 +29,11 @@ namespace Clyde_Conservatory
             AutoFitColumns();                                       //Adjust columns' width to autofit
         }
 
+        /// <summary>
+        /// When the highlighted row is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lvRecords_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
 
@@ -43,52 +48,6 @@ namespace Clyde_Conservatory
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-
-
-        }
-
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-        //    CageAllocationForm courseCU = new(course);
-        //    courseCU.Show();
-        //    this.Hide();
-        }
-
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-        //    course = new Course();
-        //    course.CourseID = 1;
-
-        //    CageAllocationForm courseCU = new(course);
-        //    courseCU.Show();
-        //    this.Hide();
-        }
-
-        private void btnExport_Click(object sender, EventArgs e)
-        {
-        //    using (SaveFileDialog saveFileDialog = new SaveFileDialog())
-        //    {
-        //        saveFileDialog.Filter = "CSV Files (*.csv)|*.csv";
-        //        if (saveFileDialog.ShowDialog() == DialogResult.OK)
-        //        {
-        //            // Call the static method from Program.cs to export ListView to CSV
-        //            Program.ExportListViewToCsv(lvRecords, saveFileDialog.FileName);
-        //            MessageBox.Show("Export Successful!");
-        //        }
-        //    }
-        }
-
-        private void txtSearch_TextChanged(object sender, EventArgs e)
-        {
-        //    LoadData(SearchResults());
-        }
-
-        private void rdo_CheckedChanged(object sender, EventArgs e)
-        {
-        //    LoadData(SearchResults());
-        }
 
         private void CageForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -96,6 +55,9 @@ namespace Clyde_Conservatory
             form.Show();
         }
 
+        /// <summary>
+        /// Load the listview with columns
+        /// </summary>
         public void LoadListView()
         {
             lvRecords.View = View.Details;                      //Used to Set how items are displayed in the listview
@@ -111,6 +73,9 @@ namespace Clyde_Conservatory
             lvRecords.Columns.Add("Num. of Animals");
         }
 
+        /// <summary>
+        /// Load the fetched records into the listview
+        /// </summary>
         public void LoadData(List<Cage> cages)
         {
             foreach (var cage in Program.Cages)
@@ -133,8 +98,10 @@ namespace Clyde_Conservatory
 
         }
 
-            
 
+        /// <summary>
+        /// Adjust the columns' width to autofit
+        /// </summary>
         private void AutoFitColumns()
         {
             // Auto-resize each column to fit the content
@@ -144,6 +111,9 @@ namespace Clyde_Conservatory
             }
         }
 
+        /// <summary>
+        /// Display the selected cage's details on the right side of the form
+        /// </summary>
         private void DisplayCage()
         {
             id = Convert.ToInt32(lvRecords.SelectedItems[0].SubItems[0].Text);

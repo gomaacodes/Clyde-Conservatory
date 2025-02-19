@@ -212,7 +212,7 @@ namespace Clyde_Conservatory
         /// Returns the number of cages the keeper can be assigned to.
         /// </summary>
         /// <returns>Number of cages left</returns>
-        public string unitsLeft()
+        public string UnitsLeft()
         {
             return $"{MaxNumOfCages - Units.Count}";
         }
@@ -271,13 +271,13 @@ namespace Clyde_Conservatory
         }
 
         public int UnitId { get; set; }
-        public List<Keeper> Keepers { get; set; } = new List<Keeper>();
-        public List<Animal> Animals { get; set; } = new List<Animal>();
         public int Capacity { get; set; }
         public string AnimalSize { get; set; }
         public char Group { get; set; }
         public List<string> SuitableAnimals { get; set; } = new List<string>();
         public Cage Cage { get; set; }
+        public List<Keeper> Keepers { get; set; } = new List<Keeper>();
+        public List<Animal> Animals { get; set; } = new List<Animal>();
 
         /// <summary>
         /// Displays the details of the unit.

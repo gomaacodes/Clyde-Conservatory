@@ -21,6 +21,9 @@ namespace Clyde_Conservatory
             animal = a;
             form = f;
         }
+        /// <summary>
+        /// When the confirm button is clicked, check if all fields are filled in and then generate the health check record
+        /// </summary>
         private void btnConfirm_Click(object sender, EventArgs e)
         {
             foreach (Control control in this.Controls)
@@ -50,6 +53,9 @@ namespace Clyde_Conservatory
             
         }
 
+        /// <summary>
+        /// When the form is closing, show the previous form
+        /// </summary>
         private void HealthCheckForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (form.GetType().ToString().Contains("AnimalEditingForm"))

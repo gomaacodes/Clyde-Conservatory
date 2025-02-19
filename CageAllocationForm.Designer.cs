@@ -132,7 +132,6 @@
             Controls.Add(lblName);
             Name = "CageAllocationForm";
             Text = "CageAllocationForm";
-            FormClosed += CageAllocationForm_FormClosed;
             Load += CageAllocationForm_Load;
             ResumeLayout(false);
             PerformLayout();

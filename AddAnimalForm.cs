@@ -16,52 +16,9 @@ namespace Clyde_Conservatory
 {
     public partial class AddAnimalForm : Form
     {
-        //private List<Department> departments = null;
-        //private Department department = null;
-
-        //public AddAnimalForm(List<Department> argDepartments, Department argDepartment)
         public AddAnimalForm()
         {
             InitializeComponent();
-            //department = argDepartment;
-            //departments = argDepartments;
-        }
-
-        private void AddAnimalForm_Load(object sender, EventArgs e)                          //To Be Adjusted According to the form
-        {
-            //    lblRecord.Text = "Department ID " + department.DepartmentID.ToString();
-
-            //    txtTitle.Text = department.Title;
-            //    txtEmail.Text = department.Email;
-            //    //Add any other missing unique properties
-
-            //    //The following is unique to department form
-            //    var allOffices = new OfficeRepository().GetAll();
-            //    var occupiedOffices = new List<int>();
-            //    var vacantOffices = new List<Office>();
-
-            //    foreach (var dep in departments)
-            //    {
-            //        occupiedOffices.Add(dep.OfficeID);
-            //    }
-
-            //    foreach (var office in allOffices)
-            //    {
-            //        if (!occupiedOffices.Contains(office.OfficeID))
-            //        {
-            //            vacantOffices.Add(office);
-            //        }
-            //    }
-
-            //    if (department.OfficeID != 0) //If the form is for an existing record, get the record's office name
-            //    {
-            //        clbOffices.Items.Add(new ListItem { Text = department.Office.RoomName, Value = department.OfficeID }, true);
-            //    }
-
-            //    foreach (var office in vacantOffices)
-            //    {
-            //        clbOffices.Items.Add(new ListItem { Text = office.RoomName, Value = office.OfficeID });
-            //    }
         }
 
         private void checkedListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -69,6 +26,9 @@ namespace Clyde_Conservatory
                 ManageCheckedItem(sender);
         }
 
+        /// <summary>
+        /// When the save button is clicked, validate the input and create an animal object
+        /// </summary>
         private void btnSave_Click(object sender, EventArgs e)
         {
             foreach (Control control in this.Controls)
@@ -101,15 +61,14 @@ namespace Clyde_Conservatory
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            //    this.Close();
+            AnimalForm animalForm = new();
+            animalForm.Show();
+            this.Close();
         }
 
-        private void AddAnimalForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            //    AnimalForm AnimalForm = new();
-            //    AnimalForm.Show();
-        }
-
+        /// <summary>
+        /// Manage the checked item in the checked list box
+        /// </summary>
         private void ManageCheckedItem(object sender)
         {
             // Get the CheckedListBox instance
@@ -135,6 +94,9 @@ namespace Clyde_Conservatory
             }
         }
 
+        /// <summary>
+        /// When the radio button is checked, set the animal types and visibility of the controls
+        /// </summary>
         private void rdbGroup_CheckedChanged(object sender, EventArgs e)
         {
             RadioButton radioButton = sender as RadioButton;
@@ -164,6 +126,9 @@ namespace Clyde_Conservatory
             }
         }
 
+        /// <summary>
+        /// Reset the visibility of the controls
+        /// </summary>
         private void ResetVisibility()
         {
             foreach (Control control in this.Controls)
@@ -175,12 +140,18 @@ namespace Clyde_Conservatory
             }
         }
 
+        /// <summary>
+        /// Set the animal types in the checked list box
+        /// </summary>
         private void SetAnimalTypes(string[] types, int width)
         {
             clbTypes.Items.AddRange(types);
             this.Width = width;
         }
 
+        /// <summary>
+        /// Set the visibility of the controls
+        /// </summary>
         private void SetVisibility(params Control[] controls)
         {
             foreach (var control in controls)
@@ -189,6 +160,9 @@ namespace Clyde_Conservatory
             }
         }
 
+        /// <summary>
+        /// Validate the input and create an animal object
+        /// </summary>
         public void ValidateAndCreateAnimal(ref Animal animal)
         {
             try
@@ -249,21 +223,37 @@ namespace Clyde_Conservatory
             }
         }
 
+        /// <summary>
+        /// Check if the input is a valid text
+        /// </summary>
+        /// <returns>True if the input is a valid text, false otherwise</returns>
         private bool IsValidText(string input)
         {
             return Regex.IsMatch(input, @"^[A-Za-z\s]+$");
         }
 
+        /// <summary>
+        /// Try to parse a string to an integer
+        /// </summary>
+        /// <returns>True if the string was successfully parsed to an integer, false otherwise</returns>
         private bool TryParseInt(string input, out int result)
         {
             return int.TryParse(input, out result);
         }
 
+        /// <summary>
+        /// Try to parse a string to a double
+        /// </summary>
+        /// <returns>True if the string was successfully parsed to a double, false otherwise</returns>
         private bool TryParseDouble(string input, out double result)
         {
             return double.TryParse(input, out result);
         }
 
+        /// <summary>
+        /// Get the name of the checked radio button in the group box
+        /// </summary>
+        /// <returns>The name of the checked radio button</returns>
         private string GetCheckedRadioButton(GroupBox groupBox)
         {
             return groupBox.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked)?.Name ?? string.Empty;

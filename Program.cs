@@ -5,7 +5,6 @@ namespace Clyde_Conservatory
     internal static class Program
     {
         public static List<Cage> Cages = new List<Cage>();
-        public static List<Unit> Units = new List<Unit>();
         public static List<Animal> Animals = new List<Animal>();
         public static List<Keeper> Keepers = new List<Keeper>();
         public static List<string> Records = new List<string>();
@@ -24,7 +23,7 @@ namespace Clyde_Conservatory
             
             // Load all Files
             Cages = FileManager.LoadCages(@"..\..\..\Cages.txt");
-            Units = FileManager.LoadUnits(@"..\..\..\Units.txt", Cages);
+            FileManager.LoadUnits(@"..\..\..\Units.txt", Cages);
 
             Animals = FileManager.LoadAnimals(@"..\..\..\Animals.txt", Cages);
             FileManager.LoadMates(@"..\..\..\Mammals-M.txt", Animals);

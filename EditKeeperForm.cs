@@ -29,6 +29,9 @@ namespace Clyde_Conservatory
             LoadUnits();
         }
 
+        /// <summary>
+        /// Load the units that the keeper can be assigned to
+        /// </summary>
         private void LoadUnits()
         {
             clbCages.Items.Clear();
@@ -46,6 +49,9 @@ namespace Clyde_Conservatory
             }
         }
 
+        /// <summary>
+        /// Save the changes made to the keeper's assigned units
+        /// </summary>
         private void btnSave_Click(object sender, EventArgs e)
         {
             var selectedUnitIds = clbCages.CheckedItems.Cast<int>().ToList();
@@ -109,6 +115,9 @@ namespace Clyde_Conservatory
             this.Close();
         }
 
+        /// <summary>
+        /// Check if the number of selected units is less than the maximum number of units a keeper can be assigned to
+        /// </summary>
         private void clbCages_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             if (e.NewValue == CheckState.Checked && clbCages.CheckedItems.Count >= keeper.MaxNumOfCages)
