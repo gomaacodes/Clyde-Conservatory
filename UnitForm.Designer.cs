@@ -30,6 +30,7 @@
         {
             lvRecords = new ListView();
             rtbRecord = new RichTextBox();
+            btnDelete = new Button();
             SuspendLayout();
             // 
             // lvRecords
@@ -50,11 +51,22 @@
             rtbRecord.TabIndex = 15;
             rtbRecord.Text = "";
             // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(884, 364);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(75, 23);
+            btnDelete.TabIndex = 17;
+            btnDelete.Text = "button1";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
+            // 
             // CageForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(971, 365);
+            ClientSize = new Size(971, 399);
+            Controls.Add(btnDelete);
             Controls.Add(rtbRecord);
             Controls.Add(lvRecords);
             Name = "CageForm";
@@ -79,5 +91,6 @@
         private RadioButton rdoType;
         private RadioButton rdoCode;
         private Button btnExport;
+        private Button button1;
     }
 }

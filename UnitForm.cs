@@ -85,9 +85,9 @@ namespace Clyde_Conservatory
                     ListViewItem listitem = new ListViewItem(unit.UnitId.ToString());     //Initialise an Item with first column value
 
                     listitem.SubItems.Add(cage.CageNumber.ToString());          //Add Subsequent columns
-                    listitem.SubItems.Add(cage.Type);          
-                    listitem.SubItems.Add(cage.Location);          
-                    listitem.SubItems.Add(cage.Size.ToString());          
+                    listitem.SubItems.Add(cage.Type);
+                    listitem.SubItems.Add(cage.Location);
+                    listitem.SubItems.Add(cage.Size.ToString());
 
                     listitem.SubItems.Add(unit.Keepers.Count.ToString());
                     listitem.SubItems.Add(unit.Animals.Count.ToString());
@@ -117,7 +117,7 @@ namespace Clyde_Conservatory
         private void DisplayCage()
         {
             id = Convert.ToInt32(lvRecords.SelectedItems[0].SubItems[0].Text);
-            cage = Program.Cages.FirstOrDefault(c => c.CageNumber == id/10);
+            cage = Program.Cages.FirstOrDefault(c => c.CageNumber == id / 10);
             unit = cage.Units.FirstOrDefault(u => u.UnitId == id);
 
 
@@ -132,6 +132,30 @@ namespace Clyde_Conservatory
 
             rtbRecord.Text = placeholder;                                                                       // Set the placeholder text to the rich text box
         }
-       
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (unit == null)
+            {
+                MessageBox.Show("No unit selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (unit.Animals.Count == 0 && unit.Keepers.Count == 0)
+            {
+                cage.Units.Remove(unit);
+                MessageBox.Show("Unit removed from cage.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                unit.Animals.Clear();
+                unit.Keepers.Clear();
+                cage.Units.Remove(unit);
+                MessageBox.Show("Unit's animals and keepers removed, then unit removed from cage.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            LoadData(Program.Cages); // Refresh the list view
+            rtbRecord.Clear(); // Clear the record description
+        }
     }
 }
